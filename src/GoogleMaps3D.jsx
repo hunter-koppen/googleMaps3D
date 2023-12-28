@@ -5,6 +5,6 @@ import "./ui/GoogleMaps3D.css";
 
 export class GoogleMaps3D extends Component {
     render() {
-        return <HelloWorldSample sampleText={this.props.sampleText} />;
+        return <CesiumView sampleText={this.props.sampleText} />;
     }
 }

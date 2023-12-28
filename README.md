@@ -1,4 +1,4 @@
-## GoogleMapsD
+## GoogleMaps3D
 [My widget description]
 
 ## Features
