@@ -1,9 +1,9 @@
 import { Component, createElement } from "react";
 
-import { HelloWorldSample } from "./components/HelloWorldSample";
-import "./ui/GoogleMapsD.css";
+import { CesiumView } from "./components/CesiumView";
+import "./ui/GoogleMaps3D.css";
 
-export class GoogleMapsD extends Component {
+export class GoogleMaps3D extends Component {
     render() {
         return <HelloWorldSample sampleText={this.props.sampleText} />;
     }
