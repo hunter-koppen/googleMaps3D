@@ -3,19 +3,25 @@ import { Component, createElement } from "react";
 export class CesiumView extends Component {
     constructor(props) {
         super(props);
-        Cesium.RequestScheduler.requestsByServer["tile.googleapis.com:443"] = 18
+        Cesium.RequestScheduler.requestsByServer["tile.googleapis.com:443"] = 18;
         Cesium.Ion.defaultAccessToken =
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1Y2VkODRmZS03ODIxLTQ5Y2YtODZhZC00YjA1NWY2ZDFjNTIiLCJpZCI6MTg2ODY5LCJpYXQiOjE3MDM4MDE5OTZ9.nKsPGvUz0wpfj2VtRSD2hOoWUFNYdGeAe__tQN5EJRE";
     }
 
-    async componentDidMount() {
-        // Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
+    componentDidMount() {
+        this.initializeCesiumViewer();
+    }
+
+    initializeCesiumViewer = async () => {
         const viewer = new Cesium.Viewer("cesiumContainer", {
             imageryProvider: false,
             baseLayerPicker: false,
             geocoder: false,
             globe: false,
             requestRenderMode: true,
+            contextOptions: {
+                webgl: { preserveDrawingBuffer: true }
+            }
         });
 
         try {
@@ -32,9 +38,30 @@ export class CesiumView extends Component {
         } catch (error) {
             console.log(`Failed to load tileset: ${error}`);
         }
-    }
+
+        this.viewer = viewer;
+    };
+
+    handleButtonClick = () => {
+        var scene = this.viewer.scene;
+        var canvas = scene.canvas;
+        var image = canvas.toDataURL();
+
+        // Create a link element
+        var link = document.createElement("a");
+        link.href = image;
+        link.download = "screenshot.png"; // Set the desired file name
+
+        // Simulate a click event to trigger the download
+        link.click();
+    };
 
     render() {
-        return <div id="cesiumContainer"></div>;
+        return (
+            <div>
+                <div id="cesiumContainer"></div>
+                <button onClick={this.handleButtonClick}>Click me</button>
+            </div>
+        );
     }
 }
